@@ -11,6 +11,11 @@
   position: relative;
   overflow: hidden;
   border-radius: 3px;
+  margin-left: 24px;
+}
+
+.clip-card:first-child {
+  margin-left: 0;
 }
 
 .clip-card__img {
