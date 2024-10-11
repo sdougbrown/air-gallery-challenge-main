@@ -6,15 +6,15 @@ export interface Clip {
   workspaceName: string;
   source: string;
   ext: string;
-  type: "video" | "photo" | "livePhoto" | "animated" | "audio" | "nonMedia";
+  type: 'video' | 'photo' | 'livePhoto' | 'animated' | 'audio' | 'nonMedia';
   size: number; // Will be set by server but required for canUpload check
   status:
-    | "created"
-    | "uploaded"
-    | "transcoding"
-    | "transcoded"
-    | "failed"
-    | "nonTranscodable";
+    | 'created'
+    | 'uploaded'
+    | 'transcoding'
+    | 'transcoded'
+    | 'failed'
+    | 'nonTranscodable';
   bookmarked: boolean;
   createdAt: string;
   recordedAt: string;
@@ -71,8 +71,8 @@ export interface ClipsListResponse {
   };
 }
 
-const boardId = "c74bbbc8-602b-4c88-be71-9e21b36b0514";
-const shortId = "bDkBvnzpB";
+const boardId = 'c74bbbc8-602b-4c88-be71-9e21b36b0514';
+const shortId = 'bDkBvnzpB';
 
 export const fetchAssets = ({
   cursor,
@@ -80,14 +80,14 @@ export const fetchAssets = ({
   cursor: string | null;
 }): Promise<ClipsListResponse> =>
   fetch(`https://api.air.inc/shorturl/${shortId}/clips/search`, {
-    method: "post",
+    method: 'post',
     headers: {
-      accept: "application/json",
-      "content-type": "application/json",
+      accept: 'application/json',
+      'content-type': 'application/json',
     },
     body: JSON.stringify({
       limit: 24,
-      type: "all",
+      type: 'all',
       withOpenDiscussionStatus: true,
       filters: {
         board: {
@@ -96,8 +96,8 @@ export const fetchAssets = ({
       },
       boardId,
       sortField: {
-        direction: "desc",
-        name: "dateModified",
+        direction: 'desc',
+        name: 'dateModified',
       },
       descendantBoardId: boardId,
       cursor,
