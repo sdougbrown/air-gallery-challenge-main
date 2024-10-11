@@ -18,7 +18,6 @@ type Item = {
   id: string;
   width: number;
   height: number;
-  processing: boolean;
 };
 type GridItem = Item & {
   marginLeft: number;
@@ -48,8 +47,9 @@ export const shouldUseFlex = true;
 // can break the syntax highlighting for some editors (vim)
 export function rowGrid<I extends Item>(
   { containerWidth, itemHeight, minItemWidth, maxMargin, minMargin }: Options,
-  items: Array<I>
-): Array<RowGridItem> {
+  items: Array<string>,
+  itemRecord: Record<string, I>
+): Array<Array<RowGridItem>> {
   // @ts-expect-error there'sa  problem with the Item | GridItem union
   return reduceItems(
     containerWidth,
@@ -57,11 +57,12 @@ export function rowGrid<I extends Item>(
     minItemWidth || DEFAULT_MIN_WIDTH,
     maxMargin || DEFAULT_MAX_MARGIN,
     minMargin || DEFAULT_MIN_MARGIN,
-    items.map((item: Item) => ({
-      id: item.id,
+    // will remove this to optimize,
+    // we don't really want to iterate through the list twice like this
+    items.map((id: string) => ({
+      id,
       height: itemHeight,
-      width: Math.ceil((item.width / item.height) * itemHeight),
-      processing: item.processing ?? false,
+      width: Math.ceil((itemRecord[id].width / itemRecord[id].height) * itemHeight),
     }))
   );
 }
@@ -127,7 +128,6 @@ function reduceItems(
                 marginLeft: rowIndex === 0 ? 0 : rowMargin,
                 // compensates for some sloppy math above - should fix :)
                 marginRight: rowIndex === nrOfElems ? -1 : null,
-                processing: rowElem.processing,
               }),
               widthDiff,
               newHeight,

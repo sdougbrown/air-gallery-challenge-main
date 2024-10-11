@@ -1,0 +1,22 @@
+.clip-list {
+  width: 100%;
+}
+
+.clip-list__row {
+  margin-bottom: 20px;
+}
+
+.clip-card {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.clip-card__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

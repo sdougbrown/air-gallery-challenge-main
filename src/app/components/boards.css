@@ -1,0 +1,18 @@
+.board-list {
+  width: 100%;
+}
+
+.board-card {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  margin-right: 24px;
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+
+.board-card__img {
+  object-fit: 'cover',
+}

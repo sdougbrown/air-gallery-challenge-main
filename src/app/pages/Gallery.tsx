@@ -1,9 +1,12 @@
 'use client';
 import { useEffect } from 'react';
-import { Collapser } from '@/app/components';
 import { useBoardStore } from '@/app/store/boardStore';
 import { useClipStore } from '@/app/store/clipStore';
 import { useShallow } from 'zustand/react/shallow';
+
+import { BoardList, ClipList, Collapser } from '@/app/components';
+
+import './gallery.css';
 
 export function GalleryPage() {
   // initial content loading,
@@ -32,12 +35,12 @@ export function GalleryPage() {
   }, [totalBoards, totalClips, loadBoards, loadClips]);
 
   return (
-    <main>
+    <main className="page-gallery">
       <Collapser label="boards" count={totalBoards}>
-        {null}
+        <BoardList />
       </Collapser>
       <Collapser label="assets" count={totalClips}>
-        {null}
+        <ClipList />
       </Collapser>
     </main>
   );
