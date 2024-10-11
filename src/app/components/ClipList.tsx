@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useClipStore } from '@/app/store/clipStore';
 import { ClipCard } from './Clip';
 
@@ -19,6 +19,7 @@ function getMaxDocHeight() {
 export function ClipList() {
   const container = useRef(null);
 
+  const [containerState, setContainerState] = useState(null);
   const list = useClipStore((state) => state.list);
   const clips = useClipStore((state) => state.clips);
   const pagination = useClipStore((state) => state.pagination);
@@ -29,6 +30,9 @@ export function ClipList() {
       return;
     }
 
+    // @ts-expect-error ignore for now
+    setContainerState(container.current.offsetWidth);
+
     const onScroll = debounce((event: Event) => {
       if (getMaxDocHeight() - window.scrollY < LOAD_THRESH) {
         if (pagination.hasMore) {
@@ -37,18 +41,27 @@ export function ClipList() {
       }
     }, 64);
 
-    document.addEventListener('scroll', onScroll);
+    const onResize = debounce((event: any) => {
+      // @ts-expect-error ignore for now
+      setContainerState(container.current.offsetWidth);
+    }, 32);
 
-    () => document.removeEventListener('scroll', onScroll);
+    document.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', onResize);
+
+    () => {
+      document.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
   }, [loadClips, pagination]);
 
+
   const itemSizes = useMemo(() => rowGrid({
-    // @ts-expect-error rush move here I know it's bad
-    containerWidth: container.current?.offsetWidth || 1000,
+    containerWidth: containerState || 0,
     itemHeight: 226, // should probably be a percentage of window
     maxMargin: 24,
     minMargin: 22,
-  }, list, clips), [list, clips]);
+  }, list, clips), [list, clips, containerState]);
 
   return (
     <div ref={container} className="clip-list">

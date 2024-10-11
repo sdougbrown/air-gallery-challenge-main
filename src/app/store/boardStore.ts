@@ -39,6 +39,8 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
       return;
     }
 
+    set({ isLoading: true });
+
     try {
       const response = await fetchBoards();
 
@@ -59,9 +61,11 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
         boards,
         // may need to add to previous total? not sure yet.
         total: response.total,
+        isLoading: false,
       });
     } catch (e) {
-      console.error(`💥 Clip Fetch Request went wrong!`, e)
+      console.error(`💥 Clip Fetch Request went wrong!`, e);
+      set({ isLoading: false });
     }
   },
 }));

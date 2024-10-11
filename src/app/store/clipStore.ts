@@ -42,6 +42,8 @@ export const useClipStore = create<ClipStore>((set, get) => ({
       return;
     }
 
+    set({ isLoading: true });
+
     try {
       const response = await fetchAssets(pagination);
 
@@ -63,9 +65,11 @@ export const useClipStore = create<ClipStore>((set, get) => ({
         pagination: response.pagination,
         // may need to add to previous total? not sure yet.
         total: response.data.total,
+        isLoading: false,
       });
     } catch (e) {
-      console.error(`💥 Clip Fetch Request went wrong!`, e)
+      console.error(`💥 Clip Fetch Request went wrong!`, e);
+      set({ isLoading: false });
     }
   },
 }));

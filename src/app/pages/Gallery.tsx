@@ -12,27 +12,29 @@ export function GalleryPage() {
   // initial content loading,
   // probably not the ideal prod strategy here
   // but i'm trying to do a lot in a short time lmao
-  const [totalBoards, loadBoards] = useBoardStore(
+  const [isLoadingBoards, totalBoards, loadBoards] = useBoardStore(
     useShallow((state) => [
+      state.isLoading,
       state.total,
       state.loadBoards,
     ])
   );
-  const [totalClips, loadClips] = useClipStore(
+  const [isLoadingClips, totalClips, loadClips] = useClipStore(
     useShallow((state) => [
+      state.isLoading,
       state.total,
       state.loadClips,
     ])
   );
 
   useEffect(() => {
-    if (totalBoards === null) {
+    if (!isLoadingBoards && totalBoards === null) {
       loadBoards();
     }
-    if (totalClips === null) {
+    if (!isLoadingClips && totalClips === null) {
       loadClips();
     }
-  }, [totalBoards, totalClips, loadBoards, loadClips]);
+  }, [isLoadingBoards, isLoadingClips, totalBoards, totalClips, loadBoards, loadClips]);
 
   return (
     <main className="page-gallery">
