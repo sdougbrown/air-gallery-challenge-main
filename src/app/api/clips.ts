@@ -60,15 +60,17 @@ export interface Clip {
   tagCount?: number;
 }
 
+export type ClipsPagination = {
+  hasMore: boolean;
+  cursor: null | string;
+};
+
 export interface ClipsListResponse {
   data: {
     total: number;
     clips: Clip[];
   };
-  pagination: {
-    hasMore: boolean;
-    cursor: null | string;
-  };
+  pagination: ClipsPagination;
 }
 
 const boardId = 'c74bbbc8-602b-4c88-be71-9e21b36b0514';
