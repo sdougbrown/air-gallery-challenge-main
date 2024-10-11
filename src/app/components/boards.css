@@ -1,5 +1,7 @@
 .board-list {
   width: 100%;
+  display: flex;
+  overflow-x: auto;
 }
 
 .board-card {
@@ -11,6 +13,7 @@
   margin-right: 24px;
   margin-bottom: 24px;
   border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .board-card__img {

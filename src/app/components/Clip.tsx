@@ -15,7 +15,7 @@ export function ClipCard({ id, style, width, height }: ClipProps) {
   return (
     <div className="clip-card" style={style}>
       <img
-        src={clip.assets.image}
+        src={`${clip.assets.image}?auto=compress&fit=crop&h=${height}&w=${width}`}
         className="clip-card__img"
         height={height}
         width={width}

@@ -3,3 +3,11 @@
   padding-left: 48px;
   padding-right: 48px;
 }
+
+
+@media screen and (max-width: 600px) {
+  .page-gallery {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
